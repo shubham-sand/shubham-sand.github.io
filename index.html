@@ -15,22 +15,6 @@
       --fh:'Fraunces',Georgia,serif;--fb:'Nunito',sans-serif;
       --r:12px;--rl:20px;--tr:0.3s cubic-bezier(0.4,0,0.2,1);
     }
-
-    /* ── NAV CONTROLS (language) ── */
-    .nav-controls {
-      display:flex;align-items:center;gap:.5rem;flex-shrink:0;
-    }
-
-    /* Language picker */
-    .lang-select {
-      appearance:none;-webkit-appearance:none;
-      background:transparent;border:1.5px solid var(--line);
-      border-radius:50px;padding:.28rem .65rem;
-      font-family:var(--fb);font-size:.7rem;font-weight:700;
-      color:var(--muted);cursor:pointer;
-      transition:all var(--tr);
-    }
-    .lang-select:hover { border-color:var(--amber);color:var(--amber); }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
     body{font-family:var(--fb);background:var(--cream);color:var(--ink);line-height:1.8;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
@@ -94,7 +78,7 @@
     .tl-scroll{
       overflow-x:auto;
       overflow-y:visible;
-      padding:20px 5vw 40px;
+      padding:240px 5vw 60px;   /* top padding = card-above height + gap */
       cursor:grab;
       -webkit-overflow-scrolling:touch;
       scrollbar-width:thin;
@@ -108,20 +92,20 @@
     /* The rail — one long flex row */
     .tl-rail{
       display:flex;
-      align-items:flex-start;
+      align-items:center;
       position:relative;
       min-width:max-content;
       gap:0;
-      padding-top:20px;
     }
 
-    /* The horizontal line — sits at the dot level, 20px from top of rail */
+    /* The horizontal line across the middle */
     .tl-rail::before{
       content:'';
       position:absolute;
-      top:29px;left:0;right:0;
+      top:50%;left:0;right:0;
       height:2px;
       background:linear-gradient(90deg,transparent,var(--amber) 5%,var(--teal) 35%,var(--rose) 65%,var(--plum) 90%,transparent);
+      transform:translateY(-50%);
       pointer-events:none;
     }
 
@@ -130,22 +114,22 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      width:220px;
+      width:200px;
       flex-shrink:0;
       position:relative;
     }
 
     /* Dot on the line */
     .tl-col-dot{
-      width:20px;height:20px;
+      width:14px;height:14px;
       border-radius:50%;
-      border:4px solid var(--cream);
+      border:3px solid var(--cream);
       flex-shrink:0;
       z-index:2;
       position:relative;
       transition:transform var(--tr);
     }
-    .tl-col:hover .tl-col-dot{transform:scale(1.35);}
+    .tl-col:hover .tl-col-dot{transform:scale(1.4);}
     .dc-amber{background:var(--amber);box-shadow:0 0 0 3px var(--amber);}
     .dc-teal {background:var(--teal); box-shadow:0 0 0 3px var(--teal);}
     .dc-rose {background:var(--rose); box-shadow:0 0 0 3px var(--rose);}
@@ -158,13 +142,20 @@
       background:var(--cream);padding:0 4px;
     }
 
-    /* All cards hang BELOW the line — normal flow, not absolute */
-    .tl-card-above,
+    /* Card above the line */
+    .tl-card-above{
+      position:absolute;
+      bottom:calc(50% + 26px);   /* above the dot */
+      width:180px;
+      display:flex;flex-direction:column;align-items:center;
+    }
+
+    /* Card below the line */
     .tl-card-below{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      width:200px;
+      position:absolute;
+      top:calc(50% + 26px);       /* below the dot */
+      width:180px;
+      display:flex;flex-direction:column;align-items:center;
     }
 
     /* Connector stem from card to dot */
@@ -324,85 +315,15 @@
     /* Books — directly below blog with reduced gap */
     .books-section{padding:1.5rem 4vw 5rem;background:var(--warm);border-top:1px solid var(--line);}
     .books-title{font-family:var(--fh);font-size:1.25rem;font-weight:900;color:var(--ink);letter-spacing:-.3px;margin-bottom:1.25rem;}
-
-    /* Book recommendation */
-    .book-rec-wrap{
-      margin-top:3rem;
-      padding-top:2.5rem;
-      border-top:1px solid var(--line);
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:3rem;
-      align-items:start;
-    }
-    .book-rec-title{
-      font-family:var(--fh);font-size:1.15rem;font-weight:900;
-      color:var(--ink);letter-spacing:-.2px;margin-bottom:.75rem;line-height:1.3;
-    }
-    .book-rec-sub{
-      font-size:.88rem;color:var(--muted);line-height:1.85;
-    }
-    .book-rec-form{display:flex;flex-direction:column;gap:.75rem;}
-    .book-rec-fields{display:flex;flex-direction:column;gap:.6rem;}
-    .book-rec-input{
-      width:100%;
-      background:var(--cream);
-      border:1.5px solid var(--line);
-      border-radius:var(--r);
-      padding:.7rem 1rem;
-      font-family:var(--fb);font-size:.88rem;color:var(--ink);
-      outline:none;transition:border-color var(--tr),box-shadow var(--tr);
-    }
-    .book-rec-input::placeholder{color:var(--muted);}
-    .book-rec-input:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-pale);}
-    .book-rec-btn{
-      align-self:flex-start;
-      background:var(--amber);color:#fff;
-      border:none;border-radius:50px;
-      padding:.75rem 1.75rem;
-      font-family:var(--fb);font-size:.84rem;font-weight:700;
-      cursor:pointer;transition:all var(--tr);
-    }
-    .book-rec-btn:hover{background:#c56d08;transform:translateY(-2px);box-shadow:0 6px 18px rgba(232,130,12,.3);}
-    .book-rec-thanks{
-      display:none;font-size:.85rem;font-weight:600;
-      color:var(--teal);background:var(--teal-pale);
-      border:1.5px solid var(--teal-lt);border-radius:var(--r);
-      padding:.7rem 1rem;
-    }
-    @media(max-width:680px){
-      .book-rec-wrap{grid-template-columns:1fr;gap:1.75rem;}
-      .book-rec-btn{width:100%;text-align:center;justify-content:center;}
-    }
-    .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1.1rem;}
-    .res-card{
-      background:var(--cream);border-radius:var(--r);
-      border:1.5px solid var(--line);
-      transition:box-shadow var(--tr),transform var(--tr);
-      position:relative;overflow:hidden;
-      display:flex;flex-direction:column;
-    }
+    .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.1rem;}
+    .res-card{background:var(--cream);border-radius:var(--r);padding:1.35rem;border:1.5px solid var(--line);transition:box-shadow var(--tr),transform var(--tr);position:relative;overflow:hidden;}
     .res-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
     .rca::before{background:var(--amber);}.rct::before{background:var(--teal);}
     .rcr::before{background:var(--rose);}.rcp::before{background:var(--plum);}
-    .res-card:hover{box-shadow:0 6px 22px rgba(0,0,0,.1);transform:translateY(-3px);}
-
-    /* Book cover image area */
-    .res-cover{
-      width:100%;height:160px;
-      background:var(--warm);
-      display:flex;align-items:center;justify-content:center;
-      font-size:2.5rem;
-      overflow:hidden;
-    }
-    .res-cover img{width:100%;height:100%;object-fit:cover;}
-
-    /* Just the title — no description, no type label */
-    .res-title{
-      font-family:var(--fh);font-size:.92rem;font-weight:700;
-      color:var(--ink);line-height:1.35;
-      padding:.75rem .9rem .85rem;
-    }
+    .res-card:hover{box-shadow:0 6px 22px rgba(0,0,0,.08);transform:translateY(-2px);}
+    .res-type{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;margin-top:.4rem;}
+    .res-title{font-family:var(--fh);font-size:.97rem;font-weight:700;color:var(--ink);margin-bottom:.3rem;}
+    .res-desc{font-size:.8rem;color:var(--muted);line-height:1.65;}
 
     /* ── CONTACT ── */
     .contact-sec{padding:3.5rem 4vw 5rem;}
@@ -441,160 +362,13 @@
     .fi-link:hover{background:var(--amber);border-color:var(--amber);transform:translateY(-2px);}
     .fi-link svg{width:16px;height:16px;fill:#fff;}
 
-    /* ══ TABLET  ≤820px ══ */
     @media(max-width:820px){
       .contact-grid{grid-template-columns:1fr;gap:2rem;}
       .edu-grid{grid-template-columns:1fr;}
-      .cv-req-inner{flex-direction:column;gap:1.25rem;}
     }
-
-    /* ══ MOBILE  ≤600px ══ */
-    @media(max-width:600px){
-
-      /* Nav — stack brand + links */
-      .nav{
-        flex-direction:column;height:auto;
-        padding:.65rem 4vw .5rem;
-        align-items:flex-start;
-      }
-      .nav-links{
-        flex-wrap:wrap;gap:.2rem;
-        margin-top:.4rem;width:100%;
-      }
-      .nav-links a{font-size:.72rem;padding:.32rem .6rem;}
-
-      /* Hero intro */
-      .story-intro{padding:3rem 5vw 2.5rem;}
-      .story-name{
-        font-size:clamp(2.8rem,11vw,4.2rem);
-        letter-spacing:-1.5px;
-        white-space:normal;
-      }
-      .story-tagline{font-size:.95rem;}
-      .story-bio{font-size:.9rem;}
-      .story-cta{flex-direction:column;align-items:center;gap:.75rem;}
-      .story-cta .btn{width:100%;max-width:280px;justify-content:center;}
-
-      /* Timeline — switch to vertical stacked on mobile */
-      .tl-wrap{padding:3rem 0 4rem;}
-      .tl-head{padding:0 5vw;margin-bottom:2rem;}
-      .tl-head-title{font-size:1.6rem;}
-      .tl-head-sub{font-size:.82rem;}
-
-      /* Override horizontal scroll — go vertical */
-      .tl-scroll{
-        overflow-x:hidden;
-        overflow-y:visible;
-        padding:0 5vw 2rem;
-        cursor:default;
-      }
-      .tl-rail{
-        flex-direction:column;
-        align-items:flex-start;
-        min-width:unset;
-        width:100%;
-        padding-top:0;
-        gap:0;
-      }
-      /* Replace horizontal line with a vertical one */
-      .tl-rail::before{
-        top:0;bottom:0;left:16px;right:auto;
-        width:2px;height:auto;
-        background:linear-gradient(to bottom,var(--amber),var(--teal),var(--rose),var(--plum));
-      }
-      /* Spacer divs become zero-height on mobile */
-      .tl-rail > div[style*="width:60px"],
-      .tl-rail > div[style*="width:40px"]{
-        width:0!important;height:16px;
-      }
-      /* Each column becomes a horizontal flex row */
-      .tl-col{
-        flex-direction:row;
-        align-items:flex-start;
-        width:100%;
-        gap:0;
-        padding:0 0 8px;
-      }
-      /* Dot on the left vertical line */
-      .tl-col-dot{
-        flex-shrink:0;
-        margin-top:4px;
-        position:relative;
-        z-index:2;
-      }
-      /* Year label next to dot */
-      .tl-year-label{
-        position:static;
-        background:transparent;
-        padding:0 8px;
-        margin:0;
-        line-height:1;
-        padding-top:5px;
-      }
-      /* Card flows to the right of dot+year */
-      .tl-card-above,
-      .tl-card-below{
-        flex-direction:column;
-        margin-left:8px;
-        width:calc(100% - 100px);
-        max-width:none;
-      }
-      /* Stem becomes horizontal */
-      .tl-stem{
-        width:16px;
-        height:1.5px;
-        margin-top:12px;
-      }
-      .tl-drag-hint{display:none;}
-
-      /* Page top */
-      .page-top{padding:4.5rem 5vw 2rem;}
-      .pg-title{font-size:clamp(1.9rem,8vw,2.8rem);letter-spacing:-.5px;}
-
-      /* Skills */
-      .ew-section{padding:1.5rem 5vw 3rem;}
-      .skills-row{gap:.4rem;}
-      .skill-pill{font-size:.77rem;padding:.32rem .8rem;}
-
-      /* Education cards */
-      .edu-grid{grid-template-columns:1fr;}
-      .edu-card{padding:1.25rem 1.5rem;}
-
-      /* CV blocks */
-      .cv-block{padding:1.25rem 1.5rem;}
-      .cv-row{flex-direction:column;gap:.1rem;}
-      .cv-loc,.cv-dates{align-self:flex-start;}
-
-      /* CV request */
-      .cv-req{padding:2rem 5vw;}
-      .cv-req-inner{flex-direction:column;gap:1rem;}
-      .cv-req-btns{flex-direction:column;width:100%;}
-      .cv-req-btns .btn{width:100%;justify-content:center;}
-
-      /* Testimonials */
-      .t-card{padding:1.5rem 1.5rem;}
-
-      /* Blog grid */
+    @media(max-width:560px){
+      .story-name{font-size:clamp(2.5rem,10vw,4rem);}
       .blog-grid{grid-template-columns:1fr;}
-      .books-section{padding:1.25rem 5vw 4rem;}
-      .res-grid{grid-template-columns:repeat(2,1fr);}
-
-      /* Contact */
-      .contact-sec{padding:2rem 5vw 4rem;}
-      .contact-grid{grid-template-columns:1fr;gap:2rem;}
-      .cf-card{padding:1.75rem 1.5rem;}
-      .cl{padding:.75rem .9rem;}
-
-      /* Footer */
-      .footer{flex-direction:column;align-items:flex-start;padding:1.75rem 5vw;gap:.75rem;}
-    }
-
-    /* ══ VERY SMALL  ≤380px ══ */
-    @media(max-width:380px){
-      .story-name{font-size:2.6rem;}
-      .nav-links a{font-size:.66rem;padding:.28rem .5rem;}
-      .res-grid{grid-template-columns:1fr;}
-      .tl-card-above,.tl-card-below{width:calc(100% - 80px);}
     }
   </style>
 </head>
@@ -609,17 +383,6 @@
     <li><a onclick="showPage('blog')"    id="nav-blog">Blogs</a></li>
     <li><a onclick="showPage('contact')" id="nav-contact">Contact me</a></li>
   </ul>
-  <div class="nav-controls">
-    <select class="lang-select" id="langSelect" onchange="setLang(this.value)" title="Language">
-      <option value="en">EN</option>
-      <option value="hi">हि</option>
-      <option value="es">ES</option>
-      <option value="fr">FR</option>
-      <option value="de">DE</option>
-      <option value="zh">中</option>
-      <option value="ar">ع</option>
-    </select>
-  </div>
 </nav>
 
 
@@ -627,7 +390,7 @@
      HOME / MY STORY
 ══════════════════════════════ -->
 <div class="page active" id="page-home">
-  <div class="hero-squiggle" style="margin-top:64px;" id="heroSquiggle"></div>
+  <div class="hero-squiggle" style="margin-top:64px;"></div>
 
   <div class="story-intro">
     <div class="sb1"></div><div class="sb2"></div>
@@ -664,12 +427,9 @@
         <!-- spacer at start -->
         <div style="width:60px;flex-shrink:0;"></div>
 
-        <!-- ── 2001–2010 ── -->
+        <!-- ── 2001–2010  above ── -->
         <div class="tl-col">
-          <div class="tl-col-dot dc-amber"></div>
-          <div class="tl-year-label" style="color:var(--amber)">2001</div>
-          <div class="tl-card-below">
-            <div class="tl-stem" style="background:var(--amber-lt)"></div>
+          <div class="tl-card-above">
             <div class="tl-card" onclick="tlToggle('tlExp0')">
               <div class="tl-car" id="tlCar0" data-idx="0">
                 <div class="tl-car-track">
@@ -686,12 +446,15 @@
                 <div class="tl-card-text" id="tlExp0" style="display:none;">Your childhood story goes here — where you were born, what home was like, and what kind of child you were.</div>
               </div>
             </div>
+            <div class="tl-stem" style="background:var(--amber-lt)"></div>
           </div>
+          <div class="tl-col-dot dc-amber"></div>
+          <div class="tl-year-label" style="color:var(--amber)">2001</div>
         </div>
 
         <div style="width:40px;flex-shrink:0;"></div>
 
-        <!-- ── 2010–2019 ── -->
+        <!-- ── 2010–2019  below ── -->
         <div class="tl-col">
           <div class="tl-col-dot dc-teal"></div>
           <div class="tl-year-label" style="color:var(--teal)">2010</div>
@@ -718,12 +481,9 @@
 
         <div style="width:40px;flex-shrink:0;"></div>
 
-        <!-- ── 2019–2022 ── -->
+        <!-- ── 2019–2022  above ── -->
         <div class="tl-col">
-          <div class="tl-col-dot dc-rose"></div>
-          <div class="tl-year-label" style="color:var(--rose)">2019</div>
-          <div class="tl-card-below">
-            <div class="tl-stem" style="background:var(--rose-lt)"></div>
+          <div class="tl-card-above">
             <div class="tl-card" onclick="tlToggle('tlExp2')">
               <div class="tl-car" id="tlCar2" data-idx="0">
                 <div class="tl-car-track">
@@ -740,12 +500,15 @@
                 <div class="tl-card-text" id="tlExp2" style="display:none;">BBA (Hons.) at Bennett University. What drew you to finance? What were the first real lessons both inside and outside the classroom?</div>
               </div>
             </div>
+            <div class="tl-stem" style="background:var(--rose-lt)"></div>
           </div>
+          <div class="tl-col-dot dc-rose"></div>
+          <div class="tl-year-label" style="color:var(--rose)">2019</div>
         </div>
 
         <div style="width:40px;flex-shrink:0;"></div>
 
-        <!-- ── 2022–Present ── -->
+        <!-- ── 2022–Present  below ── -->
         <div class="tl-col">
           <div class="tl-col-dot dc-plum"></div>
           <div class="tl-year-label" style="color:var(--plum)">2022</div>
@@ -782,8 +545,8 @@
   <footer class="footer">
     <div class="footer-left">© 2025 Shubham Sand</div>
     <div class="footer-icons">
-      <a class="fi-link" href="/cdn-cgi/l/email-protection#f28b9d8780b2979f939b9edc919d9f" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
-      <a class="fi-link" href="https://linkedin.com/in/yourprofile" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
+      <a class="fi-link" href="mailto:shandshubham@gmail.com" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+      <a class="fi-link" href="https://linkedin.com/in/shubham-sand" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
     </div>
   </footer>
 </div>
@@ -863,7 +626,7 @@
       </div>
       <div class="cv-req-btns">
         <span class="btn btn-amber" onclick="showPage('contact')">Send a message</span>
-        <a class="btn btn-outline" href="/cdn-cgi/l/email-protection#354c5a4047755058545c591b565a580a4640575f5056410876631567504440504641">Request CV</a>
+        <a class="btn btn-outline" href="mailto:shandshubham@gmail.com?subject=CV Request">Request CV</a>
       </div>
     </div>
   </div>
@@ -884,8 +647,8 @@
   <footer class="footer">
     <div class="footer-left">© 2025 Shubham Sand</div>
     <div class="footer-icons">
-      <a class="fi-link" href="/cdn-cgi/l/email-protection#3b42544e497b5e565a525715585456" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
-      <a class="fi-link" href="https://linkedin.com/in/yourprofile" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
+      <a class="fi-link" href="mailto:shandshubham@gmail.com" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+      <a class="fi-link" href="https://linkedin.com/in/shubham-sand" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
     </div>
   </footer>
 </div>
@@ -901,9 +664,9 @@
 
   <section class="blog-section">
     <div class="blog-grid">
-      <div class="blog-card"><div class="blog-top bta"></div><div class="blog-body"><h3 class="blog-title">On choosing a life rather than falling into one</h3><p class="blog-exc">What does it mean to make a deliberate choice about your life's direction — and how do you know when you are living yours versus one handed to you?</p><div class="blog-meta">Coming soon</div></div></div>
-      <div class="blog-card"><div class="blog-top btt"></div><div class="blog-body"><h3 class="blog-title">What financial analysis teaches you about thinking clearly</h3><p class="blog-exc">The discipline of breaking down complex systems into component parts applies far beyond balance sheets.</p><div class="blog-meta">Coming soon</div></div></div>
-      <div class="blog-card"><div class="blog-top btr"></div><div class="blog-body"><h3 class="blog-title">The quietness of a gap year nobody talks about</h3><p class="blog-exc">Everyone celebrates the leap. Nobody tells you about the long uncertain stretch after — and why that silence is where the real work happens.</p><div class="blog-meta">Coming soon</div></div></div>
+      <div class="blog-card"><div class="blog-top bta"></div><div class="blog-body"><span class="blog-tag bta-t">Philosophy</span><h3 class="blog-title">On choosing a life rather than falling into one</h3><p class="blog-exc">What does it mean to make a deliberate choice about your life's direction — and how do you know when you are living yours versus one handed to you?</p><div class="blog-meta">Coming soon</div></div></div>
+      <div class="blog-card"><div class="blog-top btt"></div><div class="blog-body"><span class="blog-tag btt-t">Finance</span><h3 class="blog-title">What financial analysis teaches you about thinking clearly</h3><p class="blog-exc">The discipline of breaking down complex systems into component parts applies far beyond balance sheets.</p><div class="blog-meta">Coming soon</div></div></div>
+      <div class="blog-card"><div class="blog-top btr"></div><div class="blog-body"><span class="blog-tag btr-t">Daily life</span><h3 class="blog-title">The quietness of a gap year nobody talks about</h3><p class="blog-exc">Everyone celebrates the leap. Nobody tells you about the long uncertain stretch after — and why that silence is where the real work happens.</p><div class="blog-meta">Coming soon</div></div></div>
     </div>
   </section>
 
@@ -911,47 +674,18 @@
   <section class="books-section">
     <div class="books-title">Books I have read so far</div>
     <div class="res-grid">
-      <div class="res-card rca">
-        <div class="res-cover">📗</div>
-        <div class="res-title">The Almanack of Naval Ravikant</div>
-      </div>
-      <div class="res-card rct">
-        <div class="res-cover">📘</div>
-        <div class="res-title">The psychology of money</div>
-      </div>
-      <div class="res-card rcr">
-        <div class="res-cover">📙</div>
-        <div class="res-title">Meditations — Marcus Aurelius</div>
-      </div>
-      <div class="res-card rcp" style="border-style:dashed;">
-        <div class="res-cover" style="font-size:1.8rem;color:var(--muted);">＋</div>
-        <div class="res-title" style="color:var(--muted);">More books coming</div>
-      </div>
-    </div>
-
-    <!-- Book recommendation section -->
-    <div class="book-rec-wrap">
-      <div class="book-rec-left">
-        <div class="book-rec-title">Books you would recommend me reading</div>
-        <p class="book-rec-sub">I especially enjoy autobiographical books — but I am open to any genre. If something moved you, made you think differently, or you simply think I would love it, share it here.</p>
-      </div>
-      <form class="book-rec-form" onsubmit="submitBookRec(event)">
-        <div class="book-rec-fields">
-          <input class="book-rec-input" type="text" id="recBook" placeholder="Book title" required>
-          <input class="book-rec-input" type="text" id="recAuthor" placeholder="Author (optional)">
-          <input class="book-rec-input" type="text" id="recName" placeholder="Your name (optional)">
-        </div>
-        <button type="submit" class="book-rec-btn">Recommend this book</button>
-        <div class="book-rec-thanks" id="recThanks">Thank you! I will add it to my list.</div>
-      </form>
+      <div class="res-card rca"><div class="res-type">Book</div><div class="res-title">The Almanack of Naval Ravikant</div><p class="res-desc">A guide to wealth, happiness, and clear thinking.</p></div>
+      <div class="res-card rct"><div class="res-type">Book</div><div class="res-title">The psychology of money</div><p class="res-desc">Morgan Housel on how behavior shapes financial outcomes more than knowledge does.</p></div>
+      <div class="res-card rcr"><div class="res-type">Philosophy</div><div class="res-title">Meditations — Marcus Aurelius</div><p class="res-desc">Private notes from a Roman emperor that hold up as a guide for living with intention.</p></div>
+      <div class="res-card rcp" style="border-style:dashed;background:transparent;"><div class="res-type">Add yours</div><div class="res-title" style="color:var(--muted)">More books coming</div><p class="res-desc">Share titles and I will add them here.</p></div>
     </div>
   </section>
 
   <footer class="footer">
     <div class="footer-left">© 2025 Shubham Sand</div>
     <div class="footer-icons">
-      <a class="fi-link" href="/cdn-cgi/l/email-protection#f28b9d8780b2979f939b9edc919d9f" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
-      <a class="fi-link" href="https://linkedin.com/in/yourprofile" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
+      <a class="fi-link" href="mailto:shandshubham@gmail.com" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+      <a class="fi-link" href="https://linkedin.com/in/shubham-sand" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
     </div>
   </footer>
 </div>
@@ -992,8 +726,8 @@
         </div>
       </div>
       <div class="cl-col" style="padding-top:.25rem;">
-        <a class="cl" href="/cdn-cgi/l/email-protection#70091f050230151d11191c5e131f1d"><div class="cl-icon cli-a">✉️</div><div><div class="cl-label">Email</div><div class="cl-value"><span class="__cf_email__" data-cfemail="bec7d1cbccfedbd3dfd7d290ddd1d3">[email&#160;protected]</span></div></div></a>
-        <a class="cl" href="https://linkedin.com/in/yourprofile" target="_blank"><div class="cl-icon cli-t">💼</div><div><div class="cl-label">LinkedIn</div><div class="cl-value">linkedin.com/in/yourprofile</div></div></a>
+        <a class="cl" href="mailto:shandshubham@gmail.com"><div class="cl-icon cli-a">✉️</div><div><div class="cl-label">Email</div><div class="cl-value">shandshubham@gmail.com</div></div></a>
+        <a class="cl" href="https://linkedin.com/in/shubham-sand" target="_blank"><div class="cl-icon cli-t">💼</div><div><div class="cl-label">LinkedIn</div><div class="cl-value">linkedin.com/in/shubham-sand</div></div></a>
         <div class="cl" style="cursor:default;"><div class="cl-icon cli-r">📍</div><div><div class="cl-label">Location</div><div class="cl-value">India — open to the world</div></div></div>
       </div>
     </div>
@@ -1001,14 +735,14 @@
   <footer class="footer">
     <div class="footer-left">© 2025 Shubham Sand</div>
     <div class="footer-icons">
-      <a class="fi-link" href="/cdn-cgi/l/email-protection#0e77617b7c4e6b636f6762206d6163" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
-      <a class="fi-link" href="https://linkedin.com/in/yourprofile" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
+      <a class="fi-link" href="mailto:shandshubham@gmail.com" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+      <a class="fi-link" href="https://linkedin.com/in/shubham-sand" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
     </div>
   </footer>
 </div>
 
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /* ── page routing ── */
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1019,17 +753,6 @@ function showPage(id){
   if(nv)nv.classList.add('active');
 }
 document.getElementById('nav-home').classList.add('active');
-
-/* ── adjust top offset for nav height ── */
-function fixNavOffset(){
-  const nav=document.querySelector('.nav');
-  const h=nav.offsetHeight;
-  const sq=document.getElementById('heroSquiggle');
-  if(sq)sq.style.marginTop=h+'px';
-  document.querySelectorAll('.page-top').forEach(el=>el.style.paddingTop=(h+32)+'px');
-}
-fixNavOffset();
-window.addEventListener('resize',fixNavOffset);
 
 /* ── drag-to-scroll on the timeline ── */
 (function(){
@@ -1072,28 +795,12 @@ function tR(){
 /* ── file name display ── */
 function showFN(i){document.getElementById('fName').textContent=i.files.length?i.files[0].name:'';}
 
-/* ── book recommendation ── */
-function submitBookRec(e){
-  e.preventDefault();
-  const book=document.getElementById('recBook').value.trim();
-  const author=document.getElementById('recAuthor').value.trim();
-  const name=document.getElementById('recName').value.trim();
-  if(!book)return;
-  // Show thank you message
-  document.querySelector('.book-rec-form').style.opacity='.4';
-  document.querySelector('.book-rec-form').style.pointerEvents='none';
-  document.getElementById('recThanks').style.display='block';
-  // Optional: send to Formspree if you set it up
-  // fetch('https://formspree.io/f/YOUR_ID',{method:'POST',body:JSON.stringify({book,author,name}),headers:{'Content-Type':'application/json','Accept':'application/json'}});
-}
-
 /* ── contact form ── */
 async function handleForm(e){
   e.preventDefault();
   const form=e.target,action=form.querySelector('[name="_action"]').value;
   if(action.includes('YOUR_FORMSPREE_ID')){
     document.getElementById('fErr').textContent='To activate: go to formspree.io, create a free form, and replace YOUR_FORMSPREE_ID in the HTML.';
-  
     document.getElementById('fErr').style.display='block';return;
   }
   try{
@@ -1102,181 +809,6 @@ async function handleForm(e){
     else document.getElementById('fErr').style.display='block';
   }catch{document.getElementById('fErr').style.display='block';}
 }
-
-/* ── TRANSLATION ── */
-const translations={
-  en:{
-    'nav-home':'My story','nav-work':'Education & work','nav-blog':'Blogs','nav-contact':'Contact me',
-    'hero-tagline':'Corporate finance professional',
-    'hero-bio':'My personal bio — share a few lines about yourself and I will place them right here.',
-    'hero-btn1':'Read my story','hero-btn2':'See my work',
-    'tl-label':'My journey','tl-title':'The story so far',
-    'tl-sub':'Drag to scroll. Click any card to expand the story for that period.',
-    'pg-edu':'Education & work experience',
-    'pg-blog':'Latest posts','pg-contact':'Let\'s connect',
-    'contact-sub':'Happy to connect about anything — finance, higher education, ideas, cricket, or just a good conversation. There are no wrong reasons to reach out.',
-    'books-title':'Books I have read so far',
-    'req-title':'Request latest CV',
-    'req-sub':'Open to interesting projects, collaborations, and conversations. Drop a message and I will get back to you.',
-    'req-btn1':'Send a message','req-btn2':'Request CV',
-    'copy':'© 2025 Shubham Sand',
-    'drag-hint':'← scroll or drag to explore →'
-  },
-  hi:{
-    'nav-home':'मेरी कहानी','nav-work':'शिक्षा और कार्य','nav-blog':'ब्लॉग','nav-contact':'संपर्क करें',
-    'hero-tagline':'कॉर्पोरेट फाइनेंस प्रोफेशनल',
-    'hero-bio':'मेरा व्यक्तिगत परिचय — अपने बारे में कुछ पंक्तियाँ साझा करें और मैं उन्हें यहाँ रखूँगा।',
-    'hero-btn1':'मेरी कहानी पढ़ें','hero-btn2':'मेरा काम देखें',
-    'tl-label':'मेरी यात्रा','tl-title':'अब तक की कहानी',
-    'tl-sub':'स्क्रॉल करें। किसी भी कार्ड पर क्लिक करें।',
-    'pg-edu':'शिक्षा और कार्य अनुभव',
-    'pg-blog':'नवीनतम पोस्ट','pg-contact':'जुड़ें',
-    'contact-sub':'वित्त, उच्च शिक्षा, विचार, क्रिकेट या बस एक अच्छी बातचीत — किसी भी बात पर जुड़ने में खुशी होगी।',
-    'books-title':'अब तक पढ़ी पुस्तकें',
-    'req-title':'नवीनतम CV अनुरोध करें',
-    'req-sub':'रोचक परियोजनाओं, सहयोग और बातचीत के लिए तैयार हूँ।',
-    'req-btn1':'संदेश भेजें','req-btn2':'CV अनुरोध',
-    'copy':'© 2025 शुभम सांड',
-    'drag-hint':'← स्क्रॉल करें →'
-  },
-  es:{
-    'nav-home':'Mi historia','nav-work':'Educación y trabajo','nav-blog':'Blogs','nav-contact':'Contáctame',
-    'hero-tagline':'Profesional en finanzas corporativas',
-    'hero-bio':'Mi biografía personal — comparte unas líneas sobre ti y las colocaré aquí.',
-    'hero-btn1':'Leer mi historia','hero-btn2':'Ver mi trabajo',
-    'tl-label':'Mi trayectoria','tl-title':'La historia hasta ahora',
-    'tl-sub':'Arrastra para desplazarte. Haz clic en cualquier tarjeta para expandir.',
-    'pg-edu':'Educación y experiencia laboral',
-    'pg-blog':'Últimas publicaciones','pg-contact':'Conectemos',
-    'contact-sub':'Feliz de conectar sobre cualquier tema — finanzas, ideas, cricket o simplemente una buena conversación.',
-    'books-title':'Libros que he leído','req-title':'Solicitar CV actualizado',
-    'req-sub':'Abierto a proyectos, colaboraciones y conversaciones interesantes.',
-    'req-btn1':'Enviar mensaje','req-btn2':'Solicitar CV',
-    'copy':'© 2025 Shubham Sand','drag-hint':'← desplazar →'
-  },
-  fr:{
-    'nav-home':'Mon histoire','nav-work':'Éducation et travail','nav-blog':'Blogs','nav-contact':'Me contacter',
-    'hero-tagline':'Professionnel en finance d\'entreprise',
-    'hero-bio':'Ma biographie — partagez quelques lignes sur vous et je les placerai ici.',
-    'hero-btn1':'Lire mon histoire','hero-btn2':'Voir mon travail',
-    'tl-label':'Mon parcours','tl-title':'L\'histoire jusqu\'ici',
-    'tl-sub':'Faites glisser pour défiler. Cliquez sur une carte pour en savoir plus.',
-    'pg-edu':'Formation et expérience','pg-blog':'Derniers articles','pg-contact':'Connectons-nous',
-    'contact-sub':'Heureux de discuter de tout — finance, idées, cricket ou simplement une bonne conversation.',
-    'books-title':'Livres lus','req-title':'Demander le CV',
-    'req-sub':'Ouvert aux projets, collaborations et conversations intéressantes.',
-    'req-btn1':'Envoyer un message','req-btn2':'Demander le CV',
-    'copy':'© 2025 Shubham Sand','drag-hint':'← défiler →'
-  },
-  de:{
-    'nav-home':'Meine Geschichte','nav-work':'Bildung & Arbeit','nav-blog':'Blogs','nav-contact':'Kontakt',
-    'hero-tagline':'Corporate Finance Profi',
-    'hero-bio':'Meine persönliche Bio — teile ein paar Zeilen über dich und ich platziere sie hier.',
-    'hero-btn1':'Meine Geschichte lesen','hero-btn2':'Meine Arbeit sehen',
-    'tl-label':'Mein Weg','tl-title':'Die Geschichte bisher',
-    'tl-sub':'Ziehen zum Scrollen. Klicke auf eine Karte für mehr.',
-    'pg-edu':'Bildung & Berufserfahrung','pg-blog':'Neueste Beiträge','pg-contact':'Verbinden wir uns',
-    'contact-sub':'Ich freue mich über Gespräche zu Finanzen, Ideen, Cricket oder einfach so.',
-    'books-title':'Bisher gelesene Bücher','req-title':'Aktuellen Lebenslauf anfordern',
-    'req-sub':'Offen für interessante Projekte, Kooperationen und Gespräche.',
-    'req-btn1':'Nachricht senden','req-btn2':'Lebenslauf anfragen',
-    'copy':'© 2025 Shubham Sand','drag-hint':'← scrollen →'
-  },
-  zh:{
-    'nav-home':'我的故事','nav-work':'教育与工作','nav-blog':'博客','nav-contact':'联系我',
-    'hero-tagline':'企业金融专业人士',
-    'hero-bio':'个人简介 — 分享几句话，我会把它们放在这里。',
-    'hero-btn1':'阅读我的故事','hero-btn2':'查看我的工作',
-    'tl-label':'我的旅程','tl-title':'迄今为止的故事',
-    'tl-sub':'拖动滚动。点击任何卡片展开故事。',
-    'pg-edu':'教育与工作经历','pg-blog':'最新文章','pg-contact':'联系我',
-    'contact-sub':'很乐意聊任何话题 — 金融、创意、板球或随便聊聊。',
-    'books-title':'我读过的书','req-title':'申请最新简历',
-    'req-sub':'欢迎有趣的项目、合作和对话。',
-    'req-btn1':'发送消息','req-btn2':'申请简历',
-    'copy':'© 2025 Shubham Sand','drag-hint':'← 滚动 →'
-  },
-  ar:{
-    'nav-home':'قصتي','nav-work':'التعليم والعمل','nav-blog':'مدونات','nav-contact':'تواصل معي',
-    'hero-tagline':'محترف في تمويل الشركات',
-    'hero-bio':'سيرتي الذاتية — شارك بضعة أسطر عن نفسك وسأضعها هنا.',
-    'hero-btn1':'اقرأ قصتي','hero-btn2':'شاهد أعمالي',
-    'tl-label':'رحلتي','tl-title':'القصة حتى الآن',
-    'tl-sub':'اسحب للتمرير. انقر على أي بطاقة للتوسيع.',
-    'pg-edu':'التعليم والخبرة العملية','pg-blog':'أحدث المنشورات','pg-contact':'لنتواصل',
-    'contact-sub':'يسعدني التواصل حول أي شيء — التمويل أو الأفكار أو الكريكيت أو مجرد محادثة جيدة.',
-    'books-title':'الكتب التي قرأتها','req-title':'طلب أحدث سيرة ذاتية',
-    'req-sub':'منفتح على المشاريع والتعاون والمحادثات المثيرة.',
-    'req-btn1':'إرسال رسالة','req-btn2':'طلب السيرة الذاتية',
-    'copy':'© 2025 Shubham Sand','drag-hint':'← التمرير →'
-  }
-};
-
-// Map data-i18n keys to element IDs or selectors
-const i18nMap={
-  'nav-home':['#nav-home'],
-  'nav-work':['#nav-work'],
-  'nav-blog':['#nav-blog'],
-  'nav-contact':['#nav-contact'],
-  'hero-tagline':['.story-tagline'],
-  'hero-bio':['.story-bio'],
-  'tl-label':['.tl-head-label'],
-  'tl-title':['.tl-head-title'],
-  'tl-sub':['.tl-head-sub'],
-  'drag-hint':['.tl-drag-hint'],
-  'books-title':['.books-title'],
-  'copy':['.footer-left'],
-};
-
-let currentLang='en';
-function setLang(lang){
-  currentLang=lang;
-  const t=translations[lang]||translations.en;
-  // RTL for Arabic
-  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
-  document.documentElement.lang=lang;
-  // Apply translated strings
-  Object.entries(i18nMap).forEach(([key,selectors])=>{
-    const val=t[key];if(!val)return;
-    selectors.forEach(sel=>{
-      document.querySelectorAll(sel).forEach(el=>{ el.textContent=val; });
-    });
-  });
-  // Special cases
-  if(t['pg-edu']) document.querySelectorAll('.pg-title').forEach((el,i)=>{ if(i===0)el.textContent=t['pg-edu']; });
-  if(t['pg-blog']) document.querySelectorAll('.pg-title').forEach((el,i)=>{ if(i===1)el.textContent=t['pg-blog']; });
-  if(t['pg-contact']) document.querySelectorAll('.pg-title').forEach((el,i)=>{ if(i===2)el.textContent=t['pg-contact']; });
-  if(t['contact-sub']) document.querySelectorAll('.pg-sub').forEach(el=>{ el.textContent=t['contact-sub']; });
-  if(t['hero-btn1']) document.querySelectorAll('.story-cta .btn:first-child').forEach(el=>{ el.textContent=t['hero-btn1']; });
-  if(t['hero-btn2']) document.querySelectorAll('.story-cta .btn:last-child').forEach(el=>{ el.textContent=t['hero-btn2']; });
-  if(t['req-title']) document.querySelectorAll('.cv-req-text h3').forEach(el=>{ el.textContent=t['req-title']; });
-  if(t['req-sub'])   document.querySelectorAll('.cv-req-text p').forEach(el=>{ el.textContent=t['req-sub']; });
-  if(t['req-btn1'])  document.querySelectorAll('.cv-req-btns .btn:first-child').forEach(el=>{ el.textContent=t['req-btn1']; });
-  if(t['req-btn2'])  document.querySelectorAll('.cv-req-btns .btn:last-child').forEach(el=>{ el.textContent=t['req-btn2']; });
-  localStorage.setItem('lang',lang);
-}
-// Restore saved language
-(function(){ const s=localStorage.getItem('lang'); if(s&&s!=='en'){ document.getElementById('langSelect').value=s; setLang(s); }})();
-
 </script>
-
-<!-- ═══ GOOGLE ANALYTICS ═══
-  HOW TO ACTIVATE:
-  1. Go to analytics.google.com and sign in with your Google account
-  2. Click "Start measuring" → create an Account and Property for your website
-  3. Choose "Web" platform → enter your site URL (yourusername.github.io)
-  4. Copy your Measurement ID — it looks like: G-XXXXXXXXXX
-  5. Replace G-YOUR_MEASUREMENT_ID below with your real ID
-  6. Save and re-upload to GitHub — analytics will start tracking immediately
-  You can then see: how many people visited, which pages, which country, what device, and more.
--->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_MEASUREMENT_ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-YOUR_MEASUREMENT_ID');
-</script>
-
 </body>
 </html>
