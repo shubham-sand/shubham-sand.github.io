@@ -706,7 +706,7 @@
           <div class="cf-title">Send me a message</div>
           <div class="cf-sub">Goes straight to my inbox — no need to open your email app.</div>
           <form id="cForm" onsubmit="handleForm(event)">
-            <input type="hidden" name="_action" value="https://formspree.io/f/YOUR_FORMSPREE_ID">
+            <input type="hidden" name="_action" value="https://formspree.io/f/maqprdol">
             <div class="cf-group"><label>Your name</label><input type="text" name="name" placeholder="What should I call you?" required></div>
             <div class="cf-group"><label>Your email</label><input type="email" name="email" placeholder="So I can write back" required></div>
             <div class="cf-group"><label>Your message</label><textarea name="message" placeholder="Anything — professional, personal, or just hello." required></textarea></div>
@@ -799,10 +799,6 @@ function showFN(i){document.getElementById('fName').textContent=i.files.length?i
 async function handleForm(e){
   e.preventDefault();
   const form=e.target,action=form.querySelector('[name="_action"]').value;
-  if(action.includes('YOUR_FORMSPREE_ID')){
-    document.getElementById('fErr').textContent='To activate: go to formspree.io, create a free form, and replace YOUR_FORMSPREE_ID in the HTML.';
-    document.getElementById('fErr').style.display='block';return;
-  }
   try{
     const r=await fetch(action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
     if(r.ok){form.style.display='none';document.getElementById('fOk').style.display='block';}
@@ -810,5 +806,15 @@ async function handleForm(e){
   }catch{document.getElementById('fErr').style.display='block';}
 }
 </script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3Y783HVLX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Q3Y783HVLX');
+</script>
+
 </body>
 </html>
