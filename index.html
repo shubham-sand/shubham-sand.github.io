@@ -751,8 +751,20 @@ function showPage(id){
   if(pg){pg.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
   const nv=document.getElementById('nav-'+id);
   if(nv)nv.classList.add('active');
+  // Save current page in URL hash so refresh stays on the same page
+  history.replaceState(null,null,'#'+id);
 }
-document.getElementById('nav-home').classList.add('active');
+
+// On load, read the hash and go to the right page
+(function(){
+  const hash = window.location.hash.replace('#','');
+  const validPages = ['home','work','blog','contact'];
+  if(hash && validPages.includes(hash)){
+    showPage(hash);
+  } else {
+    showPage('home');
+  }
+})();
 
 /* ── drag-to-scroll on the timeline ── */
 (function(){
